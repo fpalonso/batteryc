@@ -1,8 +1,9 @@
-package com.blaxsoftware.batteryc.batterymonitor
+package com.blaxsoftware.batteryc.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.blaxsoftware.batteryc.batterymonitor.BatteryMonitorService
 
 class PowerConnectionReceiver : BroadcastReceiver() {
 

@@ -3,6 +3,7 @@ package com.blaxsoftware.batteryc.batterymonitor
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import com.blaxsoftware.batteryc.alert.AlertManager
 
 class BatteryMonitorService : Service(), BatteryMonitorThread.BatteryLevelListener {
@@ -11,6 +12,11 @@ class BatteryMonitorService : Service(), BatteryMonitorThread.BatteryLevelListen
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
+    }
+
+    override fun onCreate() {
+        Log.d("BatteryMonitorService", "onCreate()")
+        super.onCreate()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

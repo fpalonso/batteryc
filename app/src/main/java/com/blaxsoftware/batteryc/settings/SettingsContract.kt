@@ -4,5 +4,5 @@ object SettingsContract {
 
     val KEY_MAX_BATTERY_LEVEL = "battery_level"
 
-    val DEFAULT_MAX_BATTERY_LEVEL = "80"
+    val DEFAULT_MAX_BATTERY_LEVEL = "90"
 }
