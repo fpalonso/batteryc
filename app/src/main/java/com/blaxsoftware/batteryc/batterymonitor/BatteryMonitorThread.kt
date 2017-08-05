@@ -23,7 +23,6 @@ internal class BatteryMonitorThread(val context: Context, val interval: Int = 1 
             val maxPercentage = PreferenceManager.getDefaultSharedPreferences(context).getString(
                     SettingsContract.KEY_MAX_BATTERY_LEVEL,
                     SettingsContract.DEFAULT_MAX_BATTERY_LEVEL).toInt()
-            Log.d(TAG, "percentage=$batteryPercentage, maxPercentage=$maxPercentage")
             if (batteryPercentage >= maxPercentage) {
                 levelListener.onBatteryMaxLevelReached(batteryPercentage)
             } else {

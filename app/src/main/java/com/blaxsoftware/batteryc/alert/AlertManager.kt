@@ -1,11 +1,14 @@
 package com.blaxsoftware.batteryc.alert
 
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Vibrator
 import android.support.v4.app.NotificationCompat
 import com.blaxsoftware.batteryc.R
+import com.blaxsoftware.batteryc.settings.SettingsActivity
 
 @Suppress("DEPRECATION") class AlertManager private constructor(val context: Context) {
 
@@ -30,10 +33,16 @@ import com.blaxsoftware.batteryc.R
     }
 
     private fun showNotification(batteryPercentage: Int) {
+        val settingsActivityIntent = Intent(context, SettingsActivity::class.java).setFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        val pendingIntent = PendingIntent.getActivity(context, 0, settingsActivityIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
+
         val notificationBuilder = NotificationCompat.Builder(context).setSmallIcon(
                 R.drawable.ic_stat_battery_charged).setContentTitle(
                 context.getString(R.string.battery_charged)).setContentText(
-                context.getString(R.string.battery_level_reached_max, batteryPercentage))
+                context.getString(R.string.battery_level_reached_max,
+                        batteryPercentage)).setAutoCancel(true).setContentIntent(pendingIntent)
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
     }
 
