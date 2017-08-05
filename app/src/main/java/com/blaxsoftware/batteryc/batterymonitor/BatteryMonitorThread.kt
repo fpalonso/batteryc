@@ -11,19 +11,19 @@ internal class BatteryMonitorThread(val context: Context, val interval: Int = 1 
 
     interface BatteryLevelListener {
 
-        fun onBatteryMaxLevelReached()
+        fun onBatteryMaxLevelReached(percentage: Int)
     }
 
     override fun run() {
         Log.d(TAG, "Monitor thread started")
         while (!isInterrupted) {
-            val batteryPercentage = PowerManager.getInstance(context).batteryPercentage()
+            val batteryPercentage = PowerManager.getInstance(context).batteryPercentage().toInt()
             val maxPercentage = PreferenceManager.getDefaultSharedPreferences(context).getString(
                     SettingsContract.KEY_MAX_BATTERY_LEVEL,
-                    SettingsContract.DEFAULT_MAX_BATTERY_LEVEL)
+                    SettingsContract.DEFAULT_MAX_BATTERY_LEVEL).toInt()
             Log.d(TAG, "percentage=$batteryPercentage, maxPercentage=$maxPercentage")
-            if (batteryPercentage >= maxPercentage.toFloat()) {
-                levelListener.onBatteryMaxLevelReached()
+            if (batteryPercentage >= maxPercentage) {
+                levelListener.onBatteryMaxLevelReached(batteryPercentage)
             }
             try {
                 Thread.sleep(interval * 1000L)

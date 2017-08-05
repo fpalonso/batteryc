@@ -31,9 +31,10 @@ class BatteryMonitorService : Service(), BatteryMonitorThread.BatteryLevelListen
         super.onDestroy()
         monitorThread?.interrupt()
         monitorThread = null
+        AlertManager.getInstance(this).cancelAlert()
     }
 
-    override fun onBatteryMaxLevelReached() {
-        AlertManager.getInstance(this).showBatteryMaxLevelReachedAlert()
+    override fun onBatteryMaxLevelReached(percentage: Int) {
+        AlertManager.getInstance(this).showBatteryMaxLevelReachedAlert(percentage)
     }
 }

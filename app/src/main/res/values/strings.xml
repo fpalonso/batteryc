@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">BatteryC</string>
 
     <!-- Settings -->
@@ -19,4 +20,9 @@
         <item>90</item>
         <item>100</item>
     </string-array>
+
+    <!-- Notification -->
+    <string name="battery_charged">Battery charged</string>
+    <string name="battery_level_reached_max">Battery level is over %d%%</string>
+
 </resources>
