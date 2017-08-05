@@ -12,6 +12,8 @@ internal class BatteryMonitorThread(val context: Context, val interval: Int = 1 
     interface BatteryLevelListener {
 
         fun onBatteryMaxLevelReached(percentage: Int)
+
+        fun onBatteryBelowMaxLevel()
     }
 
     override fun run() {
@@ -24,6 +26,8 @@ internal class BatteryMonitorThread(val context: Context, val interval: Int = 1 
             Log.d(TAG, "percentage=$batteryPercentage, maxPercentage=$maxPercentage")
             if (batteryPercentage >= maxPercentage) {
                 levelListener.onBatteryMaxLevelReached(batteryPercentage)
+            } else {
+                levelListener.onBatteryBelowMaxLevel()
             }
             try {
                 Thread.sleep(interval * 1000L)
