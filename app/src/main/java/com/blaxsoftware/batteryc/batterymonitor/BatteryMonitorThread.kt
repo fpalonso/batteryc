@@ -6,7 +6,7 @@ import android.util.Log
 import com.blaxsoftware.batteryc.settings.SettingsContract
 import com.blaxsoftware.batteryc.util.PowerManager
 
-internal class BatteryMonitorThread(val context: Context, val interval: Int = 1 /* TODO() */,
+internal class BatteryMonitorThread(val context: Context, val interval: Int = 5 /* TODO() */,
                                     val levelListener: BatteryLevelListener) : Thread() {
 
     interface BatteryLevelListener {
