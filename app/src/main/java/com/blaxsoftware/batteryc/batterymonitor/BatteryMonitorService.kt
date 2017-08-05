@@ -17,12 +17,12 @@ class BatteryMonitorService : Service(), BatteryMonitorThread.BatteryLevelListen
     override fun onCreate() {
         Log.d("BatteryMonitorService", "onCreate()")
         super.onCreate()
+        monitorThread = BatteryMonitorThread(context = this, levelListener = this)
+        monitorThread!!.start()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        monitorThread = BatteryMonitorThread(context = this, levelListener = this)
-        monitorThread!!.start()
         return START_STICKY
     }
 
@@ -31,9 +31,14 @@ class BatteryMonitorService : Service(), BatteryMonitorThread.BatteryLevelListen
         super.onDestroy()
         monitorThread?.interrupt()
         monitorThread = null
+        AlertManager.getInstance(this).cancelAlert()
     }
 
-    override fun onBatteryMaxLevelReached() {
-        AlertManager.getInstance(this).showBatteryMaxLevelReachedAlert()
+    override fun onBatteryMaxLevelReached(percentage: Int) {
+        AlertManager.getInstance(this).showBatteryMaxLevelReachedAlert(percentage)
+    }
+
+    override fun onBatteryBelowMaxLevel() {
+        AlertManager.getInstance(this).cancelAlert()
     }
 }
