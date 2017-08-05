@@ -20,12 +20,14 @@ class BatteryMonitorService : Service(), BatteryMonitorThread.BatteryLevelListen
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        super.onStartCommand(intent, flags, startId)
         monitorThread = BatteryMonitorThread(context = this, levelListener = this)
         monitorThread!!.start()
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
     override fun onDestroy() {
+        Log.d("BatteryMonitorService", "onDestroy()")
         super.onDestroy()
         monitorThread?.interrupt()
         monitorThread = null
